@@ -1,0 +1,34 @@
+[
+  {
+    "id": "86a9c5t1b",
+    "name": "test swagger",
+    "description": "testando o push pelo swagger",
+    "status": "to do",
+    "dateCreated": "2025-06-11T13:19:32.229Z",
+    "dueDate": "2025-06-29T04:00:00.000Z"
+  },
+  {
+    "id": "86a9cu09a",
+    "name": "Tarefa 3",
+    "description": "Mais uma só pra ter certeza",
+    "status": "to do",
+    "dateCreated": "2025-06-11T19:59:16.974Z",
+    "dueDate": null
+  },
+  {
+    "id": "86a9c0mqe",
+    "name": "teste criação de tarefa",
+    "description": "testar rota para criar tarefa",
+    "status": "to do",
+    "dateCreated": "2025-06-11T03:35:42.283Z",
+    "dueDate": "2025-07-24T04:00:00.000Z"
+  },
+  {
+    "id": "86a9cvqcw",
+    "name": "mais uma",
+    "description": "",
+    "status": "to do",
+    "dateCreated": "2025-06-11T20:39:06.002Z",
+    "dueDate": null
+  }
+]

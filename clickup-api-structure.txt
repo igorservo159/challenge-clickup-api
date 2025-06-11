@@ -1,0 +1,61 @@
+ser-util-api/
+├── database/
+│   └── database.json
+│
+├── src/
+│   ├── app/
+│   │   ├── use-cases/
+│   │   │   ├── ClearAllLocalTasks/
+│   │   │   │   └── ClearAllLocalTasksUseCase.js
+│   │   │   ├── CreateTask/
+│   │   │   │   └── CreateTaskUseCase.js
+│   │   │   ├── DeleteLocalTask/
+│   │   │   │   └── DeleteLocalTaskUseCase.js
+│   │   │   ├── GetAllLocalTasks/
+│   │   │   │   └── GetAllLocalTasksUseCase.js
+│   │   │   └── SyncAndGetAllTasks/
+│   │   │       └── SyncAndGetAllTasksUseCase.js
+│   │   ├── repositories/
+│   │   │   └── ITaskRepository.js
+│   │   └── services/
+│   │       └── IClickUpService.js
+│   │
+│   ├── core/
+│   │   └── errors/
+│   │       ├── ApplicationError.js
+│   │       ├── NotFoundError.js
+│   │       ├── ServiceError.js
+│   │       └── ValidationError.js
+│   │
+│   ├── domain/
+│   │   └── entities/
+│   │       ├── Task.js
+│   │       └── Task.test.js
+│   │
+│   ├── infra/
+│   │   ├── config/
+│   │   │   └── index.js
+│   │   ├── database/
+│   │   │   └── json-file/
+│   │   │       └── JsonFileTaskRepository.js
+│   │   ├── http/
+│   │   │   ├── controllers/
+│   │   │   │   ├── StorageController.js
+│   │   │   │   └── TaskController.js
+│   │   │   ├── routes/
+│   │   │   │   ├── storage.routes.js
+│   │   │   │   └── task.routes.js
+│   │   │   └── server.js
+│   │   └── services/
+│   │       └── ClickUpApiService.js
+│   │
+│   └── main.js
+│
+├── .env
+├── .env.example
+├── .gitignore
+├── openapi.yaml
+├── Dockerfile
+├── .dockerignore
+├── package.json
+└── package-lock.json
