@@ -12,7 +12,7 @@ Existem duas maneiras de testar esta API, uma online e outra localmente.
 
 Para sua conveniência, a API já está implantada e em execução na plataforma Render. Você pode testar todas as suas funcionalidades imediatamente, sem precisar configurar nada na sua máquina.
 
-* **URL Base da API:** `https://[SEU-LINK-DO-RENDER-AQUI].onrender.com`
+* **URL Base da API:** `https://challenge-clickup-api.onrender.com`
 * **Ação Recomendada:** Acesse a **Documentação Interativa (Swagger)** no link abaixo para começar os testes.
 
 ### Opção 2: Executando o Projeto Localmente
@@ -31,7 +31,7 @@ Para interagir com a API (seja a versão em produção ou a local), você pode u
 
 A documentação completa e interativa da API foi criada com Swagger (OpenAPI) e é a principal ferramenta para testes.
 
-* **URL (Produção):** `https://[SEU-LINK-DO-RENDER-AQUI].onrender.com/api-docs`
+* **URL (Produção):** `https://challenge-clickup-api.onrender.com/api-docs`
 * **URL (Local):** `http://localhost:3000/api-docs`
 
 ### 2. Frontend de Teste Visual
@@ -227,3 +227,9 @@ Para executar os testes unitários da camada de domínio, utilize o comando:
 ```bash
 npm test
 ```
+
+## Metodologia e Agradecimentos
+
+O desenvolvimento deste projeto foi realizado de forma iterativa, utilizando a IA Gemini (Google) como uma ferramenta de apoio em um processo análogo à um *pair programming*.
+
+Todas as decisões de arquitetura, refatoração e design final foram conduzidas pelo desenvolvedor. A IA atuou como um assistente para acelerar a escrita de código boilerplate, debater trade-offs de design (como as convenções RESTful e a estrutura de documentação), e auxiliar na depuração de erros, simulando um ambiente de code review contínuo.

@@ -10,8 +10,10 @@ info:
     As tarefas são persistidas em um arquivo local (**database.json**), mas a arquitetura permite a fácil substituição por um banco de dados real (como MongoDB ou PostgreSQL) através da implementação da interface *ITaskRepository*.
 
 servers:
+  - url: https://seu-nome-de-servico.onrender.com
+    description: Servidor de Produção (Render)
   - url: http://localhost:3000
-    description: Servidor de Desenvolvimento
+    description: Servidor de Desenvolvimento Local
 
 tags:
   - name: Tasks
