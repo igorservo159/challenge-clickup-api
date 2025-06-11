@@ -228,7 +228,7 @@ Para executar os testes unitários da camada de domínio, utilize o comando:
 npm test
 ```
 
-## Metodologia e Agradecimentos
+## Agradecimentos
 
 O desenvolvimento deste projeto foi realizado de forma iterativa, utilizando a IA Gemini (Google) como uma ferramenta de apoio em um processo análogo à um *pair programming*.
 
