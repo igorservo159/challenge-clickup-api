@@ -1,0 +1,156 @@
+openapi: '3.0.0'
+info:
+  title: 'Ser Útil - ClickUp API'
+  version: '1.0.0'
+  description: |
+    ## Visão Geral
+    API RESTful desenvolvida em **Node.js** com **Clean Architecture** para integração com o ClickUp.
+
+    ### Armazenamento
+    As tarefas são persistidas em um arquivo local (**database.json**), mas a arquitetura permite a fácil substituição por um banco de dados real (como MongoDB ou PostgreSQL) através da implementação da interface *ITaskRepository*.
+
+servers:
+  - url: http://localhost:3000
+    description: Servidor de Desenvolvimento
+
+tags:
+  - name: Tasks
+    description: Operações sobre o recurso Tarefa (sincronização com ClickUp, criação, exclusão).
+  - name: Storage
+    description: Operações de manutenção sobre o armazenamento local de dados.
+
+paths:
+  /api/tasks:
+    get:
+      tags: [Tasks]
+      summary: Sincroniza e retorna todas as tarefas
+      description: Executa o fluxo de sincronização com a API do ClickUp e atualiza o armazenamento local.
+      responses:
+        '200': { $ref: '#/components/responses/TaskList' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+    post:
+      tags: [Tasks]
+      summary: Cria uma nova tarefa
+      description: Cria uma tarefa no ClickUp e a persiste localmente.
+      requestBody:
+        required: true
+        content:
+          application/json: { schema: { $ref: '#/components/schemas/NewTaskPayload' } }
+      responses:
+        '201':
+          description: A tarefa foi criada com sucesso.
+          content:
+            application/json: { schema: { $ref: '#/components/schemas/Task' } }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/Unauthorized' }
+        '503': { $ref: '#/components/responses/ServiceUnavailable' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+
+  /api/tasks/{id}:
+    delete:
+      tags: [Tasks]
+      summary: Exclui uma tarefa específica (apenas localmente)
+      description: Exclui uma tarefa do arquivo **database.json** com base no seu ID. Não afeta a tarefa no ClickUp.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: O ID da tarefa a ser excluída.
+          schema: { type: string }
+      responses:
+        '204': { description: Tarefa excluída localmente com sucesso. }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+
+  /api/storage:
+    get:
+      tags: [Storage]
+      summary: Lista todas as tarefas do armazenamento local
+      description: Lê e retorna a lista de tarefas diretamente do arquivo **database.json**, sem contatar a API do ClickUp.
+      responses:
+        '200': { $ref: '#/components/responses/TaskList' }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+    delete:
+      tags: [Storage]
+      summary: Limpa todo o armazenamento local de tarefas
+      description: Exclui **todas** as tarefas do arquivo **database.json**. Esta operação não afeta as tarefas no ClickUp.
+      responses:
+        '204': { description: Armazenamento local limpo com sucesso. }
+        '500': { $ref: '#/components/responses/InternalServerError' }
+
+components:
+  schemas:
+    Task:
+      type: object
+      properties:
+        id: { type: string, description: O ID único da tarefa., example: "86a9avuq1" }
+        name: { type: string, description: O título da tarefa., example: "Finalizar documentação da API" }
+        description: { type: string, description: A descrição detalhada., example: "Utilizar o padrão OpenAPI 3.0 com exemplos claros." }
+        status: { type: string, description: O status atual., example: "in progress" }
+        dateCreated: { type: string, format: date-time, example: "2025-06-11T18:30:00Z" }
+        dueDate: { type: string, format: date-time, example: "2025-06-12T21:00:00Z" }
+    NewTaskPayload:
+      type: object
+      required: [title]
+      properties:
+        title: { type: string, description: "O título da nova tarefa.", example: "Planejar a próxima sprint" }
+        description: { type: string, description: "Descrição opcional.", example: "Definir as prioridades e o escopo." }
+        status: { type: string, enum: [to do, in progress, done], example: "to do" }
+        startDate: { type: string, format: date, example: "2025-07-01" }
+        dueDate: { type: string, format: date, example: "2025-07-15" }
+    ApiError:
+      type: object
+      properties:
+        message: { type: string, description: "A mensagem de erro." }
+
+  responses:
+    TaskList:
+      description: Uma lista de tarefas.
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/Task'
+    BadRequest:
+      description: Requisição inválida (ex: campo obrigatório faltando).
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          examples:
+            titleMissing: { summary: Exemplo de título faltando, value: { message: "O título da tarefa é obrigatório." } }
+    Unauthorized:
+      description: Falha na autenticação. O token da API do ClickUp pode estar inválido ou sem permissão.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          examples:
+            invalidToken: { summary: Exemplo de token inválido, value: { message: "Token do ClickUp inválido ou sem permissão." } }
+    ServiceUnavailable:
+      description: O serviço externo (ClickUp API) está temporariamente indisponível.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          examples:
+            clickupDown: { summary: Exemplo de falha no ClickUp, value: { message: "O serviço externo está indisponível." } }
+    InternalServerError:
+      description: Erro interno inesperado no servidor.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          examples:
+            genericError: { summary: Erro genérico, value: { message: "Ocorreu um erro interno inesperado no servidor." } }
+    NotFound:
+      description: O recurso solicitado não foi encontrado.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ApiError'
+          examples:
+            taskNotFound: { summary: Tarefa não encontrada, value: { message: "A tarefa com o ID X não foi encontrada no armazenamento local." } }
