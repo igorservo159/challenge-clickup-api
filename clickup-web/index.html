@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ser Útil - ClickUp API</title>
+  <link rel="icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div id="left-panel">
+    <h2>Criar Nova Tarefa</h2>
+    <form id="create-task-form">
+      <label for="title">Título (Obrigatório)</label>
+      <input type="text" id="title" name="title" required>
+      <label for="description">Descrição</label>
+      <textarea id="description" name="description" rows="4"></textarea>
+      <label for="status">Status</label>
+      <select id="status" name="status">
+        <option value="to do">To Do</option>
+        <option value="in progress">In Progress</option>
+        <option value="done">Done</option>
+      </select>
+      <label for="startDate">Data de Início</label>
+      <input type="date" id="startDate" name="startDate">
+      <label for="dueDate">Data de Vencimento</label>
+      <input type="date" id="dueDate" name="dueDate">
+      <button type="submit" id="create-btn">Criar Tarefa</button>
+    </form>
+  </div>
+
+  <div id="right-panel">
+
+    <div id="explanation">
+      <h2>Como Esta API Funciona</h2>
+      <p>Esta interface é uma ferramenta de teste para consumir uma API RESTful desenvolvida com Node.js, seguindo os
+        princípios de <strong>Clean Architecture</strong> para garantir um código desacoplado, testável e de fácil
+        manutenção.</p>
+
+      <h3>Armazenamento Local</h3>
+      <p>Para simplificar, as tarefas são persistidas localmente em um arquivo <strong>database.json</strong>. Você pode
+        inspecionar este arquivo diretamente no projeto da API para ver os dados brutos.</p>
+      <ul>
+        <li><strong>Localização:</strong> <code>raiz-do-projeto-api/database/database.json</code></li>
+      </ul>
+      <p><strong>Flexibilidade da Arquitetura:</strong> Graças à Clean Architecture, este método de armazenamento pode
+        ser facilmente substituído por um banco de dados mais robusto (como MongoDB ou PostgreSQL) sem alterar a lógica
+        de negócio. Isso é possível porque nosso código depende da interface <em>ITaskRepository</em>. Bastaria criar
+        uma nova classe, como <em>MongoTaskRepository</em>, que implemente o mesmo contrato e trocar uma única linha no
+        arquivo <em>main.js</em> da API, onde a dependência é injetada.</p>
+
+      <h3>Fluxo de Ações</h3>
+      <p>As ações nesta página interagem com a API da seguinte forma:</p>
+      <ul>
+        <li>
+          <strong>Formulário "Criar Nova Tarefa":</strong> Aciona a rota <code>POST /api/tasks</code>.
+          <br>
+          <strong>Fluxo:</strong> Envia os dados do formulário para a API, que cria a tarefa no ClickUp e a salva
+          localmente.
+        </li>
+        <br>
+        <li>
+          <strong>Botão "Sincronizar com ClickUp":</strong> Aciona a rota <code>GET /api/tasks</code>.
+          <br>
+          <strong>Fluxo:</strong> Busca todas as tarefas da lista no ClickUp, salva/atualiza cada uma no arquivo local e
+          exibe a lista completa.
+        </li>
+        <br>
+        <li>
+          <strong>Botão "Excluir Apenas Localmente" (em cada card):</strong> Aciona a rota <code>DELETE
+            /api/tasks/:id</code>.
+          <br>
+          <strong>Fluxo:</strong> Exclui uma única tarefa do arquivo local. <strong>Não</strong> afeta a tarefa no
+          ClickUp.
+        </li>
+        <br>
+        <li>
+          <strong>Botão "Atualizar Visualização Local":</strong> Aciona a rota <code>GET /api/storage</code>.
+          <br>
+          <strong>Fluxo:</strong> Apenas lê o conteúdo do arquivo local e o exibe na tela, sem contatar o ClickUp.
+        </li>
+        <br>
+        <li>
+          <strong>Botão "Limpar Armazenamento Local":</strong> Aciona a rota <code>DELETE /api/storage</code>.
+          <br>
+          <strong>Fluxo:</strong> Exclui <strong>todas</strong> as tarefas do arquivo local. É uma operação destrutiva
+          que também <strong>não</strong> afeta o ClickUp.
+        </li>
+      </ul>
+    </div>
+
+    <div class="header">
+      <h2>Visualização do database.json</h2>
+      <div class="buttons-container">
+        <button id="sync-btn">Sincronizar com ClickUp</button>
+        <button id="local-refresh-btn">Atualizar Visualização Local</button>
+        <button id="clear-local-btn" style="background-color:#c0392b; color:white;">Limpar Armazenamento Local</button>
+      </div>
+    </div>
+    <div id="data-container">Carregando...</div>
+
+  </div>
+
+  <script src="script.js"></script>
+
+</body>
+
+</html>
