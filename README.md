@@ -12,7 +12,7 @@ Existem duas maneiras de testar esta API, uma online e outra localmente.
 
 A API já está implantada e em execução na plataforma Render. Você pode testar todas as suas funcionalidades imediatamente, sem precisar configurar nada na sua máquina.
 
-> Acesse a **[Documentação Interativa (Swagger)](documentacao-swagger)** para começar os testes.
+> Acesse a **[Documentação Interativa (Swagger)](#documentacao-swagger)** para começar os testes.
 
 ### Opção 2: Executando o Projeto Localmente
 
