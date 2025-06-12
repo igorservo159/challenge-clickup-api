@@ -8,18 +8,18 @@ O projeto inclui uma documentação interativa com **Swagger**, um **cliente de 
 
 Existem duas maneiras de testar esta API, uma online e outra localmente.
 
-### Opção 1 (Recomendada): Usando a API em Produção
+### Usando a API em Produção
 
 A API já está implantada e em execução na plataforma Render. Você pode testar todas as suas funcionalidades imediatamente, sem precisar configurar nada na sua máquina.
 
 * Acesse a **[Documentação Interativa (Swagger)](https://challenge-clickup-api.onrender.com/api-docs)** para começar os testes.
 
-> **Nota Importante (Plano Gratuito):**
-> O deploy utiliza o plano gratuito da plataforma Render. Para otimizar recursos, os serviços neste plano entram em estado de suspensão (*sleep mode*) após 15 minutos sem receber requisições.
+> **Importante:**
+> O deploy utiliza o plano gratuito da plataforma Render. Para otimizar recursos, os serviços neste plano entram em estado de suspensão após 15 minutos sem receber requisições.
 >
-> Como consequência, a **primeira chamada à API após um período de inatividade pode apresentar um atraso de até 30 segundos** enquanto o servidor é reativado. Por favor, aguarde um momento. As requisições subsequentes terão tempo de resposta normal.
+> Assim, a **primeira chamada à API após um período de inatividade pode apresentar um atraso de alguns minutos** enquanto o servidor é reativado. As requisições subsequentes terão tempo de resposta normal.
 
-### Opção 2: Executando o Projeto Localmente
+### Executando o Projeto Localmente
 
 Se preferir inspecionar o código e rodar a aplicação em seu próprio ambiente, siga os passos de instalação detalhados na seção "Começando".
 
@@ -29,23 +29,23 @@ Se preferir inspecionar o código e rodar a aplicação em seu próprio ambiente
 
 ## Ferramentas de Interação
 
-Para interagir com a API (seja a versão em produção ou a local), você pode usar as seguintes ferramentas:
+Para interagir com a API, você pode usar as seguintes ferramentas:
 
 ### Documentação Swagger
 
-A documentação completa e interativa da API foi criada com Swagger (OpenAPI) e é a principal ferramenta para testes.
+A documentação interativa da API foi criada com Swagger (OpenAPI) e é a principal ferramenta para testes.
 
 * **URL (Produção):** [https://challenge-clickup-api.onrender.com/api-docs](https://challenge-clickup-api.onrender.com/api-docs)
 * **URL (Local):** [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
 
 ### Frontend de Teste Visual
 
-Um cliente de frontend simples e desacoplado foi criado para demonstrar as funcionalidades de forma visual.
+Um cliente de frontend simples foi criado para demonstrar as funcionalidades de forma visual.
 
-* **Localização:** O código está na pasta separada `clickup-web`
-* **Como Usar:**
+* O código está na pasta separada `clickup-web`
+* Como Usar:
     1.  Com a API em execução (localmente ou na nuvem), abra o arquivo `index.html` diretamente no seu navegador.
-    2.  **Importante:** Por padrão, este cliente está configurado para se comunicar com a API local (`http://localhost:3000`). Para apontá-lo para a API em produção, basta alterar a constante `API_BASE_URL` no topo do arquivo `script.js`.
+    2.  **Importante:** Por padrão, este cliente está configurado para se comunicar com a API local (`http://localhost:3000`). Para apontá-lo para a API em produção, basta alterar a constante `API_BASE_URL` no topo do arquivo `script.js` para `https://challenge-clickup-api.onrender.com`.
 
 ---
 
@@ -57,9 +57,9 @@ A arquitetura deste projeto foi uma decisão consciente para demonstrar a constr
 
 O projeto segue os princípios da **Clean Architecture** e do **Domain-driven Design (DDD)**. A principal regra é a da dependência, que aponta sempre para o centro, protegendo a lógica de negócio de detalhes externos.
 
-* **Domain:** A camada mais interna, contendo a entidade `Task` com suas regras de negócio puras, sem dependências externas. Este é o coração da aplicação.
-* **Application (app):** Orquestra os fluxos de dados e contém os **Casos de Uso** (Use Cases), que representam todas as funcionalidades que o sistema pode executar (ex: `CreateTaskUseCase`). Esta camada depende apenas do Domínio.
-* **Infrastructure (infra):** A camada mais externa, onde residem os detalhes de implementação como o servidor web (Express), acesso a banco de dados, e serviços de terceiros (ClickUp API). Ela depende das camadas internas.
+* **Domain:** A camada mais interna, contendo a entidade `Task` com suas regras de negócio puras, sem dependências externas. 
+* **Application (app):** Orquestra os fluxos de dados e contém os **Casos de Uso**, que representam todas as funcionalidades que o sistema pode executar. Esta camada depende apenas do Domínio.
+* **Infrastructure (infra):** A camada mais externa, onde residem os detalhes de implementação como o servidor web (Express), acesso a banco de dados e o serviço do ClickUp. Ela depende das camadas internas.
 
 Essa separação garante que o núcleo da aplicação seja independente de frameworks e tecnologias, tornando-o altamente testável e duradouro.
 
@@ -151,7 +151,7 @@ A API foi projetada com uma separação clara entre as operações que lidam com
 
 ### Recurso Principal: `/api/tasks`
 
-Estes endpoints representam as operações centrais sobre o recurso **Tarefa** e envolvem comunicação com a API do ClickUp.
+Estes endpoints representam as operações centrais sobre o recurso e envolvem comunicação com a API do ClickUp.
 
 * `GET /api/tasks`: Sincroniza e retorna a lista completa de tarefas.
 * `POST /api/tasks`: Cria uma nova tarefa no ClickUp e a persiste localmente.
