@@ -1,4 +1,4 @@
-# API de Integração com ClickUp - Teste Prático Ser Útil
+# API de Integração com ClickUp - Teste Prático
 
 Esta é uma API RESTful desenvolvida em **Node.js** como parte de um teste prático. O objetivo é fornecer uma interface para integrar sistemas internos com a plataforma de gerenciamento de tarefas **ClickUp**.
 
@@ -10,10 +10,9 @@ Existem duas maneiras de testar esta API, uma online e outra localmente.
 
 ### Opção 1 (Recomendada): Usando a API em Produção
 
-Para sua conveniência, a API já está implantada e em execução na plataforma Render. Você pode testar todas as suas funcionalidades imediatamente, sem precisar configurar nada na sua máquina.
+A API já está implantada e em execução na plataforma Render. Você pode testar todas as suas funcionalidades imediatamente, sem precisar configurar nada na sua máquina.
 
-* **URL Base da API:** `https://challenge-clickup-api.onrender.com`
-* **Ação Recomendada:** Acesse a **Documentação Interativa (Swagger)** no link abaixo para começar os testes.
+> Acesse a **[Documentação Interativa (Swagger)](https://challenge-clickup-api.onrender.com/api-docs)** para começar os testes.
 
 ### Opção 2: Executando o Projeto Localmente
 
@@ -38,7 +37,7 @@ A documentação completa e interativa da API foi criada com Swagger (OpenAPI) e
 
 Um cliente de frontend simples e desacoplado foi criado para demonstrar as funcionalidades de forma visual.
 
-* **Localização:** O código está na pasta separada `ser-util-frontend-tester`.
+* **Localização:** O código está na pasta separada `clickup-web`
 * **Como Usar:**
     1.  Com a API em execução (localmente ou na nuvem), abra o arquivo `index.html` diretamente no seu navegador.
     2.  **Importante:** Por padrão, este cliente está configurado para se comunicar com a API local (`http://localhost:3000`). Para apontá-lo para a API em produção, basta alterar a constante `API_BASE_URL` no topo do arquivo `script.js`.
@@ -166,30 +165,27 @@ Estes endpoints foram criados intencionalmente como uma **ferramenta de diagnós
 
 Siga as instruções abaixo para configurar e executar o projeto localmente.
 
-### Pré-requisitos
+- Requisitos:
+    - Node.js (v18 ou superior) ou Docker
+    - git
 
-* Node.js (v18 ou superior)
+- Comece clonando o repositório e entrando no diretório da API:
 
-### Instalação
+```bash
+git clone https://github.com/igorservo159/challenge-clickup-api
+cd clickup-api
+```
 
-1.  **Clone o repositório:**
-    ```bash
-    git clone https://github.com/igorservo159/challenge-clickup-api
-    cd clickup-api
-    ```
+- Configure as Variáveis de Ambiente:
 
-2.  **Instale as dependências:**
-    ```bash
-    npm install
-    ```
+Este projeto requer variáveis de ambiente para se conectar à API do ClickUp. Um arquivo de exemplo chamado `.env.example` é fornecido.
 
-3.  **Configure as Variáveis de Ambiente:**
-    * Este projeto requer variáveis de ambiente para se conectar à API do ClickUp. Um arquivo de exemplo chamado `.env.example` é fornecido.
-    * Faça uma cópia deste arquivo e renomeie-a para `.env`:
-        ```bash
-        cp .env.example .env
-        ```
-    * Abra o novo arquivo `.env` e preencha as variáveis com seus próprios dados do ClickUp. As instruções para obter cada valor estão abaixo.
+Faça uma cópia deste arquivo e renomeie-a para `.env`:
+```bash
+cp .env.example .env
+```
+
+Abra o novo arquivo `.env` e preencha as variáveis com seus próprios dados do ClickUp. As instruções para obter cada valor estão abaixo.
 
 ### Como Obter as Credenciais do ClickUp
 
@@ -204,21 +200,52 @@ Siga as instruções abaixo para configurar e executar o projeto localmente.
     2.  Olhe para a URL no seu navegador. Ela terá um formato como `https://app.clickup.com/123456/v/li/987654321`.
     3.  O `LIST_ID` é a sequência de números após `/li/`. No exemplo acima, seria `987654321`.
 
-### Executando a Aplicação
+### Instalação com Docker
 
-Com as dependências instaladas e o arquivo `.env` configurado, inicie o servidor:
+- Construa a imagem Docker:
+
+```bash
+docker build -t clickup-api .
+```
+
+- Execute o contêiner:
+
+```bash
+docker run --env-file ./.env -p 3000:3000 -d --name clickup-api-container clickup-api
+```
+
+Ele utilizará seu arquivo .env local de forma segura, sem copiá-lo para dentro da imagem.
+
+> Para ver os logs, utilize: 
+
+```bash
+docker logs clickup-api-container
+```
+
+Já para parar o contêiner, utilize:
+```bash
+docker stop clickup-api-container
+```
+
+### Instalação sem Docker
+
+- Instale as dependências:
+```bash
+npm install
+```
+
+- Com as dependências instaladas e o arquivo `.env` configurado, inicie o servidor:
 
 ```bash
 npm run dev
 ```
+
 O servidor será iniciado em modo de desenvolvimento. As seguintes mensagens devem aparecer no console:
 
 ```text
 🚀 API Server rodando em http://localhost:3000
 📄 Documentação Swagger disponível em http://localhost:3000/api-docs
 ```
-
-Agora você pode acessar a documentação interativa para testar todos os endpoints da API.
 
 ### Testes
 
@@ -227,9 +254,3 @@ Para executar os testes unitários da camada de domínio, utilize o comando:
 ```bash
 npm test
 ```
-
-## Agradecimentos
-
-O desenvolvimento deste projeto foi realizado de forma iterativa, utilizando a IA Gemini (Google) como uma ferramenta de apoio em um processo análogo à um *pair programming*.
-
-Todas as decisões de arquitetura, refatoração e design final foram conduzidas pelo desenvolvedor. A IA atuou como um assistente para acelerar a escrita de código boilerplate, debater trade-offs de design (como as convenções RESTful e a estrutura de documentação), e auxiliar na depuração de erros, simulando um ambiente de code review contínuo.
