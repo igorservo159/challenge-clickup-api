@@ -12,7 +12,7 @@ Existem duas maneiras de testar esta API, uma online e outra localmente.
 
 A API já está implantada e em execução na plataforma Render. Você pode testar todas as suas funcionalidades imediatamente, sem precisar configurar nada na sua máquina.
 
-> Acesse a **[Documentação Interativa (Swagger)](https://challenge-clickup-api.onrender.com/api-docs)** para começar os testes.
+> Acesse a **[Documentação Interativa (Swagger)](#1-documentacao-interativa-swagger)** para começar os testes.
 
 ### Opção 2: Executando o Projeto Localmente
 
@@ -165,20 +165,20 @@ Estes endpoints foram criados intencionalmente como uma **ferramenta de diagnós
 
 Siga as instruções abaixo para configurar e executar o projeto localmente.
 
-- Requisitos:
-    - Node.js (v18 ou superior) ou Docker
-    - git
+**Requisitos:**
+- Node.js (v18 ou superior) ou Docker
+- git
 
-- Comece clonando o repositório e entrando no diretório da API:
+Comece clonando o repositório e entrando no diretório da API:
 
 ```bash
 git clone https://github.com/igorservo159/challenge-clickup-api
 cd clickup-api
 ```
 
-- Configure as Variáveis de Ambiente:
+Configure as Variáveis de Ambiente:
 
-Este projeto requer variáveis de ambiente para se conectar à API do ClickUp. Um arquivo de exemplo chamado `.env.example` é fornecido.
+> Este projeto requer variáveis de ambiente para se conectar à API do ClickUp. Um arquivo de exemplo chamado `.env.example` é fornecido.
 
 Faça uma cópia deste arquivo e renomeie-a para `.env`:
 ```bash
@@ -202,39 +202,50 @@ Abra o novo arquivo `.env` e preencha as variáveis com seus próprios dados do 
 
 ### Instalação com Docker
 
-- Construa a imagem Docker:
+Construa a imagem Docker:
 
 ```bash
 docker build -t clickup-api .
 ```
 
-- Execute o contêiner:
+ Execute o contêiner:
 
 ```bash
 docker run --env-file ./.env -p 3000:3000 -d --name clickup-api-container clickup-api
 ```
 
-Ele utilizará seu arquivo .env local de forma segura, sem copiá-lo para dentro da imagem.
+Após executar o comando run, sua API estará rodando dentro do Docker em `http://localhost:3000/`.
+Ela utilizará seu arquivo .env local de forma segura, sem copiá-lo para dentro da imagem.
 
-> Para ver os logs, utilize: 
+Segue abaixo alguns comandos docker para gerenciar seu container local:
 
-```bash
-docker logs clickup-api-container
-```
+- Ver contêineres em execução:
+    ```bash
+    docker ps
+    ```
 
-Já para parar o contêiner, utilize:
-```bash
-docker stop clickup-api-container
-```
+- Ver os logs: 
+    ```bash
+    docker logs clickup-api-container
+    ```
+
+- Parar o contêiner:
+    ```bash
+    docker stop clickup-api-container
+    ```
+- Remover o contêiner (após parado):
+    ```bash
+    docker rm serutil-api-container
+    ```
 
 ### Instalação sem Docker
 
-- Instale as dependências:
+Instale as dependências:
 ```bash
 npm install
 ```
 
-- Com as dependências instaladas e o arquivo `.env` configurado, inicie o servidor:
+Com as dependências instaladas e o arquivo `.env` configurado, inicie o servidor:
 
 ```bash
 npm run dev
