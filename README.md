@@ -12,7 +12,12 @@ Existem duas maneiras de testar esta API, uma online e outra localmente.
 
 A API já está implantada e em execução na plataforma Render. Você pode testar todas as suas funcionalidades imediatamente, sem precisar configurar nada na sua máquina.
 
-> Acesse a **[Documentação Interativa (Swagger)](#documentacao-swagger)** para começar os testes.
+* Acesse a **[Documentação Interativa (Swagger)](https://challenge-clickup-api.onrender.com/api-docs)** para começar os testes.
+
+> **Nota Importante (Plano Gratuito):**
+> O deploy utiliza o plano gratuito da plataforma Render. Para otimizar recursos, os serviços neste plano entram em estado de suspensão (*sleep mode*) após 15 minutos sem receber requisições.
+>
+> Como consequência, a **primeira chamada à API após um período de inatividade pode apresentar um atraso de até 30 segundos** enquanto o servidor é reativado. Por favor, aguarde um momento. As requisições subsequentes terão tempo de resposta normal.
 
 ### Opção 2: Executando o Projeto Localmente
 
@@ -208,13 +213,14 @@ Construa a imagem Docker:
 docker build -t clickup-api .
 ```
 
- Execute o contêiner:
+Execute o contêiner:
 
 ```bash
 docker run --env-file ./.env -p 3000:3000 -d --name clickup-api-container clickup-api
 ```
 
 Após executar o comando run, sua API estará rodando dentro do Docker em `http://localhost:3000/`.
+
 Ela utilizará seu arquivo .env local de forma segura, sem copiá-lo para dentro da imagem.
 
 Segue abaixo alguns comandos docker para gerenciar seu container local:
