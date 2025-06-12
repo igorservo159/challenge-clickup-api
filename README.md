@@ -12,7 +12,7 @@ Existem duas maneiras de testar esta API, uma online e outra localmente.
 
 A API já está implantada e em execução na plataforma Render. Você pode testar todas as suas funcionalidades imediatamente, sem precisar configurar nada na sua máquina.
 
-> Acesse a **[Documentação Interativa (Swagger)](#1-documentacao-interativa-swagger)** para começar os testes.
+> Acesse a **[Documentação Interativa (Swagger)](documentacao-swagger)** para começar os testes.
 
 ### Opção 2: Executando o Projeto Localmente
 
@@ -26,14 +26,14 @@ Se preferir inspecionar o código e rodar a aplicação em seu próprio ambiente
 
 Para interagir com a API (seja a versão em produção ou a local), você pode usar as seguintes ferramentas:
 
-### 1. Documentação Interativa (Swagger)
+### Documentação Swagger
 
 A documentação completa e interativa da API foi criada com Swagger (OpenAPI) e é a principal ferramenta para testes.
 
 * **URL (Produção):** [https://challenge-clickup-api.onrender.com/api-docs](https://challenge-clickup-api.onrender.com/api-docs)
 * **URL (Local):** [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
 
-### 2. Frontend de Teste Visual
+### Frontend de Teste Visual
 
 Um cliente de frontend simples e desacoplado foi criado para demonstrar as funcionalidades de forma visual.
 
